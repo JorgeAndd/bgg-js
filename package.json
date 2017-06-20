@@ -1,0 +1,19 @@
+{
+  "name": "bgg-node",
+  "version": "1.0.0",
+  "description": "A node implementation of BGG API",
+  "main": "api.js",
+  "scripts": {
+    "test": "mocha tests.js"
+  },
+  "author": "Andd",
+  "license": "ISC",
+  "dependencies": {
+    "iconv-lite": "^0.4.18",
+    "request": "^2.81.0",
+    "request-promise-native": "^1.0.4",
+    "xml-js": "^1.3.2",
+    "xml-parser": "^1.2.1",
+    "xml2js": "^0.4.17"
+  }
+}
