@@ -35,6 +35,32 @@ class Thing {
 
         return url;
     }
+
+    getDescription()
+    {
+        return this.fields.description;
+    }
+
+    getYear()
+    {
+        return this.fields.yearpublished['$'].value;
+    }
+
+    getPlayers()
+    {
+        var min = Number(this.fields.minplayers['$'].value);
+        var max = Number(this.fields.maxplayers['$'].value);
+
+        return {min: min, max: max};
+    }
+
+    getPlayTime()
+    {
+        var min = Number(this.fields.minplaytime['$'].value);
+        var max = Number(this.fields.minplaytime['$'].value);
+
+        return {min: min, max: max};
+    }
 }
 
 module.exports = Thing;
