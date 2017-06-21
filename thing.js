@@ -121,47 +121,16 @@ class Thing {
     }
 
     getSuggestedNumberOfPlayers()
-    {
-        var pollData = {};
-
-        this.fields.poll.some(function(poll)
-        {
-            var description = poll['$'];
-            
-            if(description.name === 'suggested_numplayers')
-            {
-                pollData.totalVotes = Number(description.totalvotes);
-                pollData.results = {};
-
-                var results = poll['results'];
-                results.forEach(function(result)
-                {
-                    var numberOfPlayers = result['$'].numplayers;
-                    var votes = {};
-
-                    result['result'].map(function(voting)
-                    {
-                        voting = voting['$'];
-                        votes[voting.value] = voting.numvotes;
-                    });
-
-                    pollData.results[numberOfPlayers] = votes;
-                });
-                
-                return true;
-            }
-        });
-
-        return pollData;
-
+    {   
+        return this.getPoolData('suggested_numplayers', this.compositeResultParser);
     }
 
     getSuggestedPlayerAge()
     {
-        return this.getSimplePoolResults('suggested_playerage');
+        return this.getPoolData('suggested_playerage', this.simpleResultParser);
     }
 
-    getSimplePoolResults(type)
+    getPoolData(type, resultParser)
     {
         var pollData = {};
 
@@ -175,16 +144,46 @@ class Thing {
                 pollData.results = {};
 
                 var results = poll['results'];
-                results.forEach(function(result)
-                {
-                    pollData.results[result.value] = result.numvotes;
-                });
+                pollData.results = resultParser(results);
             }
 
             return true;
         });
 
         return pollData;
+    }
+
+    simpleResultParser(results) 
+    {
+        var resultsData = {}
+
+        results.forEach(function(result)
+        {
+            resultsData[result.value] = result.numvotes;
+        });
+
+        return resultsData;
+    }
+
+    compositeResultParser(results)
+    {
+        var resultData = {};
+
+        results.forEach(function(result)
+        {
+            var numberOfPlayers = result['$'].numplayers;
+            var votes = {};
+
+            result['result'].map(function(voting)
+            {
+                voting = voting['$'];
+                votes[voting.value] = voting.numvotes;
+            });
+
+            resultData[numberOfPlayers] = votes;
+        });    
+
+        return resultData;
     }
 
 }
