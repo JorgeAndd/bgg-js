@@ -1,17 +1,19 @@
 'use strict';
 
-var xml2js = require('xml2js').Parser();
+var xml2js = require('xml2js').Parser({explicitArray: false});
 
 class Thing {
-    constructor(xml) {
+    constructor(xml) 
+    {
         var self = this;
 
         xml2js.parseString(xml, function(err, result) {
-            self.fields = result.items.item[0];
+            self.fields = result.items.item;
         })
     }
 
-    getName(type = 'primary') {
+    getName(type = 'primary') 
+    {
         var names = [];
 
         this.fields.name.map(function(obj) {
@@ -22,6 +24,16 @@ class Thing {
         });
 
         return (names.length > 1) ? names : names[0];
+    }
+
+    getImage(type)
+    {
+        if(type === 'thumbnail')
+            var url = this.fields.thumbnail;
+        else
+            var url = this.fields.image;
+
+        return url;
     }
 }
 
