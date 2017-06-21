@@ -145,9 +145,10 @@ class Thing {
 
                 var results = poll['results'];
                 pollData.results = resultParser(results);
+
+                return true;
             }
 
-            return true;
         });
 
         return pollData;
@@ -157,9 +158,11 @@ class Thing {
     {
         var resultsData = {}
 
-        results.forEach(function(result)
+        results.result.forEach(function(result)
         {
-            resultsData[result.value] = result.numvotes;
+            result = result['$'];
+
+            resultsData[result.value] = Number(result.numvotes);
         });
 
         return resultsData;

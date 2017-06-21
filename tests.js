@@ -167,7 +167,7 @@ describe('Items', function()
             var playerAge = thing.getSuggestedPlayerAge();
 
             var expectedPlayerAge = {
-                totalVote: 137,
+                totalVotes: 137,
                 results: {
                     '2': 0,
                     '3': 1,
@@ -183,6 +183,8 @@ describe('Items', function()
                     '21 and up': 0
                 }
             }
+
+            assert.deepEqual(playerAge, expectedPlayerAge);
 
         });
 
