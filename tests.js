@@ -160,7 +160,31 @@ describe('Items', function()
             }
 
             assert.deepEqual(numberOfPlayers, expectedNumberOfPlayers);
-        })
+        });
+
+        it('get suggested player age', function()
+        {
+            var playerAge = thing.getSuggestedPlayerAge();
+
+            var expectedPlayerAge = {
+                totalVote: 137,
+                results: {
+                    '2': 0,
+                    '3': 1,
+                    '4': 3, 
+                    '5': 9,
+                    '6': 39,
+                    '8': 58,
+                    '10': 16,
+                    '12': 7,
+                    '14': 2,
+                    '16': 2,
+                    '18': 0,
+                    '21 and up': 0
+                }
+            }
+
+        });
 
     })
 });

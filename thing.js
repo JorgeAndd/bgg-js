@@ -124,7 +124,7 @@ class Thing {
     {
         var pollData = {};
 
-        this.fields.poll.map(function(poll)
+        this.fields.poll.some(function(poll)
         {
             var description = poll['$'];
             
@@ -134,7 +134,7 @@ class Thing {
                 pollData.results = {};
 
                 var results = poll['results'];
-                results.map(function(result)
+                results.forEach(function(result)
                 {
                     var numberOfPlayers = result['$'].numplayers;
                     var votes = {};
@@ -147,15 +147,44 @@ class Thing {
 
                     pollData.results[numberOfPlayers] = votes;
                 });
+                
+                return true;
             }
         });
 
         return pollData;
+
     }
 
-    getPoolResults(type)
+    getSuggestedPlayerAge()
     {
+        return this.getSimplePoolResults('suggested_playerage');
+    }
 
+    getSimplePoolResults(type)
+    {
+        var pollData = {};
+
+        this.fields.poll.some(function(poll)
+        {
+            var description = poll['$'];
+
+            if(description.name === type)
+            {
+                pollData.totalVotes = Number(description.totalvotes);
+                pollData.results = {};
+
+                var results = poll['results'];
+                results.forEach(function(result)
+                {
+                    pollData.results[result.value] = result.numvotes;
+                });
+            }
+
+            return true;
+        });
+
+        return pollData;
     }
 
 }
