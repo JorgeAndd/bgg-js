@@ -140,6 +140,26 @@ describe('Items', function()
                                       'Swan Panasia Co., Ltd.'];
 
             assert.deepEqual(publishers, expectedPublishers);
+        });
+
+        it('get suggested number of players', function()
+        {
+            var numberOfPlayers = thing.getSuggestedNumberOfPlayers();
+
+            var expectedNumberOfPlayers = {
+                totalVotes: 410,
+                results: {
+                    '1': { 'Best': 0, 'Recommended': 0, 'Not Recommended': 266},
+                    '2': { 'Best': 1, 'Recommended': 4, 'Not Recommended': 274},
+                    '3': { 'Best': 2, 'Recommended': 78, 'Not Recommended': 240},
+                    '4': { 'Best': 58, 'Recommended': 271, 'Not Recommended': 32},
+                    '5': { 'Best': 256, 'Recommended': 123, 'Not Recommended': 0},
+                    '6': { 'Best': 307, 'Recommended': 69, 'Not Recommended': 2},
+                    '6+': { 'Best': 42, 'Recommended': 82, 'Not Recommended': 90}
+                }
+            }
+
+            assert.deepEqual(numberOfPlayers, expectedNumberOfPlayers);
         })
 
     })

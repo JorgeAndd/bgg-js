@@ -109,7 +109,8 @@ class Thing {
     {
         var values = [];
 
-        this.fields.link.map(function(obj) {
+        this.fields.link.map(function(obj) 
+        {
             var attributes = obj['$'];
             if (attributes.type === type) {
                 values.push(attributes.value);
@@ -117,6 +118,44 @@ class Thing {
         });
 
         return values;
+    }
+
+    getSuggestedNumberOfPlayers()
+    {
+        var pollData = {};
+
+        this.fields.poll.map(function(poll)
+        {
+            var description = poll['$'];
+            
+            if(description.name === 'suggested_numplayers')
+            {
+                pollData.totalVotes = Number(description.totalvotes);
+                pollData.results = {};
+
+                var results = poll['results'];
+                results.map(function(result)
+                {
+                    var numberOfPlayers = result['$'].numplayers;
+                    var votes = {};
+
+                    result['result'].map(function(voting)
+                    {
+                        voting = voting['$'];
+                        votes[voting.value] = voting.numvotes;
+                    });
+
+                    pollData.results[numberOfPlayers] = votes;
+                });
+            }
+        });
+
+        return pollData;
+    }
+
+    getPoolResults(type)
+    {
+
     }
 
 }
