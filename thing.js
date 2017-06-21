@@ -46,6 +46,9 @@ class Thing {
         return this.fields.yearpublished['$'].value;
     }
 
+    /**
+     *  Returns an object with the format {min: min, max: max}
+     */
     getPlayers()
     {
         var min = Number(this.fields.minplayers['$'].value);
@@ -54,6 +57,9 @@ class Thing {
         return {min: min, max: max};
     }
 
+    /**
+     *  Returns an object with the format {min: min, max: max}
+     */
     getPlayTime()
     {
         var min = Number(this.fields.minplaytime['$'].value);
@@ -61,6 +67,58 @@ class Thing {
 
         return {min: min, max: max};
     }
+
+    getMinAge()
+    {
+        return this.fields.minage['$'].value;
+    }
+
+    getCategories()
+    {
+        return this.getLinkValues('boardgamecategory');
+    }
+
+    getMechanics()
+    {
+        return this.getLinkValues('boardgamemechanic');
+    }
+
+    getExpansions()
+    {
+        return this.getLinkValues('boardgameexpansion');
+    }
+
+    getDesigners()
+    {
+        return this.getLinkValues('boardgamedesigner');
+    }
+
+    getArtists()
+    {
+        return this.getLinkValues('boardgameartist');
+    }
+
+    getPublishers()
+    {
+        return this.getLinkValues('boardgamepublisher');
+    }
+
+    // Get value of a link field of a given type
+    // Return a list of the corresponding values
+    getLinkValues(type)
+    {
+        var values = [];
+
+        this.fields.link.map(function(obj) {
+            var attributes = obj['$'];
+            if (attributes.type === type) {
+                values.push(attributes.value);
+            }
+        });
+
+        return values;
+    }
+
 }
 
 module.exports = Thing;

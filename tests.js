@@ -70,9 +70,77 @@ describe('Items', function()
             var playTime = thing.getPlayTime();
             assert.deepEqual(playTime, {min: 30, max: 30});
         });
-
         
+        it('get min age', function()
+        {
+            var age = thing.getMinAge();
+            assert.equal(age, 6);
+        });
 
+        it('get cathegories', function()
+        {
+            var categories = thing.getCategories();
+            var expectedCategories = ['Card Game', 'Humor', 'Party Game'];
+
+            assert.deepEqual(categories, expectedCategories);
+        });
+
+        it('get mechanics', function()
+        {
+            var mechanics = thing.getMechanics();
+            var expectedMechanics = ['Simultaneous Action Selection', 'Storytelling', 'Voting'];
+
+            assert.deepEqual(mechanics, expectedMechanics);
+        });
+
+        it('get expansions', function() 
+        {
+            var expansions = thing.getExpansions();
+            var expectedExpansions = ['Dixit 2: "Gift" promo card', 'Dixit 2: "The American" promo card', 
+                                      'Dixit 3: Journey', 'Dixit Odyssey (expansion)',
+                                      'Dixit Odyssey: "Bunny" promo card', 
+                                      'Dixit Origins: "La Machine à rêves" Promotional card', 'Dixit Quest',
+                                      'Dixit: "Magic bunny" promo card', 
+                                      'Dixit: "Pumpkinhead" and "Santa" promo cards', 
+                                      'Dixit: "The Dragon" promo card',
+                                      'Dixit: "The Inheritors" promo cards', 
+                                      'Dixit: "The Werewolves of Miller\'s Hollow: The Pact" Promo Cards',
+                                      'Dixit: "Werewolves" promo cards', 
+                                      'Dixit: 2012 Asmodee Special Cards', 
+                                      'Dixit: Anniversary Pack',
+                                      'Dixit: Daydreams', 'Dixit: Memories', 'Dixit: Origins', 
+                                      'Dixit: Revelations', 'Dixit: Spielbox 03/15 Promo Card',
+                                      'Dixit: Tabletop Day 2015 Promo Pack' ];
+            
+            assert.deepEqual(expansions, expectedExpansions);
+        });
+
+        it('get designers', function()
+        {
+            var designers = thing.getDesigners();
+            var expectedDesigners = ['Jean-Louis Roubira'];
+
+            assert.deepEqual(designers, expectedDesigners);
+        });
+
+        it('get artists', function()
+        {
+            var artists = thing.getArtists();
+            var expectedArtists = ['Marie Cardouat'];
+
+            assert.deepEqual(artists, expectedArtists);
+        });
+
+        it('get publishers', function()
+        {
+            var publishers = thing.getPublishers();
+            var expectedPublishers = ['ADC Blackfire Entertainment', 'Asmodee', 'Asterion Press', 'Galápagos Jogos',
+                                      'Gém Klub Kft.', 'hobbity.eu', 'Hobby Japan', 'KADABRA', 'Kaissa Chess & Games',
+                                      'Korea Boardgames co., Ltd.', 'Lautapelit.fi', 'Libellud', 'Morapiaf', 'REBEL.pl',
+                                      'Swan Panasia Co., Ltd.'];
+
+            assert.deepEqual(publishers, expectedPublishers);
+        })
 
     })
 });
