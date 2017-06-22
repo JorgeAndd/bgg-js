@@ -122,15 +122,20 @@ class Thing {
 
     getSuggestedNumberOfPlayers()
     {   
-        return this.getPoolData('suggested_numplayers', this.compositeResultParser);
+        return this.getPollData('suggested_numplayers', this.compositeResultParser);
     }
 
     getSuggestedPlayerAge()
     {
-        return this.getPoolData('suggested_playerage', this.simpleResultParser);
+        return this.getPollData('suggested_playerage', this.simpleResultParser);
     }
 
-    getPoolData(type, resultParser)
+    getLanguageDependency()
+    {
+        return this.getPollData('language_dependence', this.simpleResultParser);
+    }
+
+    getPollData(type, resultParser)
     {
         var pollData = {};
 

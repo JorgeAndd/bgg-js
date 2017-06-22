@@ -188,6 +188,24 @@ describe('Items', function()
 
         });
 
+        it('get language dependency', function()
+        {
+            var languageDependency = thing.getLanguageDependency();
+
+            var expectedLanguageDependency = {
+                totalVotes: 157,
+                results: {
+                    'No necessary in-game text': 155,
+                    'Some necessary text - easily memorized or small crib sheet': 0,
+                    'Moderate in-game text - needs crib sheet or paste ups': 0,
+                    'Extensive use of text - massive conversion needed to be playable': 0,
+                    'Unplayable in another language': 2
+                }
+            }
+
+            assert.deepEqual(languageDependency, expectedLanguageDependency);
+        });
+
     })
 });
 
