@@ -1,4 +1,4 @@
-var client = require('./client.js'),
+var client = require('../client.js'),
     assert = require('assert');
 
 describe('Items', function() 

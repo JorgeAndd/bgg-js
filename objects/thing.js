@@ -1,15 +1,23 @@
 'use strict';
 
-var xml2js = require('xml2js').Parser({explicitArray: false});
+var xml2js = require('xml2js').Parser({explicitArray: false}),
+    helper = require('../helper/helper.js');
 
 class Thing {
     constructor(xml) 
     {
         var self = this;
+        this.xml = xml;
 
         xml2js.parseString(xml, function(err, result) {
             self.fields = result.items.item;
         })
+    }
+
+    // Returns raw xml data from thing
+    getXml()
+    {
+        return xml;
     }
 
     getName(type = 'primary') 
