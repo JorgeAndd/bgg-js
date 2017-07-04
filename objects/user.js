@@ -24,6 +24,35 @@ class User {
         return helper.getValue(this.fields, 'lastname');
     }
 
+    getAvatar()
+    {
+        return helper.getValue(this.fields, 'avatarlink');
+    }
+
+    getYearRegistred()
+    {
+        return helper.getValue(this.fields, 'yearregistered');
+    }
+
+    getState()
+    {
+        return helper.getValue(this.fields, 'stateorprovince');
+    }
+
+    getCountry()
+    {
+        return helper.getValue(this.fields, 'country');
+    }
+
+    getTradeRating()
+    {
+        return helper.getValue(this.fields, 'traderating');
+    }
+
+    getMarketRating()
+    {
+        return helper.getValue(this.fields, 'marketrating');
+    }
 
 
 }
