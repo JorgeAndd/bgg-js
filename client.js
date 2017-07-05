@@ -6,13 +6,13 @@ var request = require('request-promise-native'),
 module.exports = {
     baseUrl: 'https://www.boardgamegeek.com/xmlapi2/',
 
-    getThing: function(id, callback) {
+    thing: function(id, callback) {
         let params = 'id=' + id;
         let requestUrl = this.baseUrl + 'thing?' + params;
         
         request(requestUrl)
             .then(function(body) {
-                var thing = new Thing(body);
+                var thing = new Thing(id, body);
                 callback(thing);
             })
             .catch(function(err) {
@@ -20,13 +20,13 @@ module.exports = {
             });
     },
 
-    getUser: function(name, callback) {
+    user: function(name, callback) {
         let params = 'name=' + name;
         let requestUrl = this.baseUrl + 'user?' + params;
         
         request(requestUrl)
             .then(function(body) {
-                var user = new User(body);
+                var user = new User(name, body);
                 callback(user);
             })
             .catch(function(err) {

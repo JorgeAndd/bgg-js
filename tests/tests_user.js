@@ -1,6 +1,8 @@
 var client = require('../client.js'),
     assert = require('assert');
 
+// TODO: switch to chai for assertion
+
 describe('Items', function() 
 {
     describe('Jorgel', function()
@@ -9,7 +11,7 @@ describe('Items', function()
 
         before(function(done)
         {
-            client.getUser('Jorgel', function(result) 
+            client.user('Jorgel', function(result) 
             {
                 user = result; 
                 done();
@@ -18,7 +20,7 @@ describe('Items', function()
 
         it('get first name', function()
         {
-            var name = user.getFirstName();
+            var name = user.firstName;
 
             assert.equal(name, 'Jorge');
         });
@@ -79,6 +81,12 @@ describe('Items', function()
             assert.equal(rating, '0');
         });
         
+        it('get url', function()
+        {
+            var url = user.getUrl();
+
+            assert.equal(url, 'https://boardgamegeek.com/user/Jorgel');
+        });
 
     });
 });

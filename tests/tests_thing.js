@@ -1,6 +1,8 @@
 var client = require('../client.js'),
     assert = require('assert');
 
+// TODO: switch to chai for assertion
+
 describe('Items', function() 
 {
     describe('Dixit', function() 
@@ -9,7 +11,7 @@ describe('Items', function()
 
         before(function(done) 
         {
-            client.getThing(39856, function(result) 
+            client.thing(39856, function(result) 
             {
                thing = result; 
                done();
@@ -18,22 +20,22 @@ describe('Items', function()
 
         it('get name', function()
         {
-            var name = thing.getName();
+            var name = thing.name;
             assert.equal(name, 'Dixit');
         })
 
         it('get images', function() 
         {
-            var image = thing.getImage();
+            var image = thing.image;
             assert.equal(image, 'https://cf.geekdo-images.com/images/pic3483909.jpg');
             
-            var thumbnail = thing.getImage('thumbnail');
+            var thumbnail = thing.thumbnail;
             assert.equal(thumbnail, 'https://cf.geekdo-images.com/images/pic3483909_t.jpg');
         });
 
         it('get description', function()
         {
-            var description = thing.getDescription();
+            var description = thing.description;
             var expectedDescription = '2010 Spiel des Jahres Winner&#10;&#10;One player is the storyteller' +
                                       ' for the turn and looks at the images on the 6 cards in her hand. ' +
                                       'From one of these, she makes up a sentence and says it out loud ' + 
@@ -55,31 +57,37 @@ describe('Items', function()
 
         it('get year published', function()
         {
-            var year = thing.getYear();
+            var year = thing.year;
             assert.equal(year, 2008);
         });
 
         it('get players', function()
         {
-            var players = thing.getPlayers();
+            var players = thing.players;
             assert.deepEqual(players, {min: 3, max: 6});
+
+            var min = thing.minPlayers;
+            assert.equal(min, 3, 'minimum players');
+
+            var max = thing.maxPlayers;
+            assert.equal(max, 6, 'maximum players');
         });
 
         it('get play time', function()
         {
-            var playTime = thing.getPlayTime();
+            var playTime = thing.playingTime;
             assert.deepEqual(playTime, {min: 30, max: 30});
         });
         
         it('get min age', function()
         {
-            var age = thing.getMinAge();
+            var age = thing.minAge;
             assert.equal(age, 6);
         });
 
         it('get cathegories', function()
         {
-            var categories = thing.getCategories();
+            var categories = thing.categories;
             var expectedCategories = ['Card Game', 'Humor', 'Party Game'];
 
             assert.deepEqual(categories, expectedCategories);
@@ -87,7 +95,7 @@ describe('Items', function()
 
         it('get mechanics', function()
         {
-            var mechanics = thing.getMechanics();
+            var mechanics = thing.mechanics;
             var expectedMechanics = ['Simultaneous Action Selection', 'Storytelling', 'Voting'];
 
             assert.deepEqual(mechanics, expectedMechanics);
@@ -95,7 +103,7 @@ describe('Items', function()
 
         it('get expansions', function() 
         {
-            var expansions = thing.getExpansions();
+            var expansions = thing.expansions;
             var expectedExpansions = ['Dixit 2: "Gift" promo card', 'Dixit 2: "The American" promo card', 
                                       'Dixit 3: Journey', 'Dixit Odyssey (expansion)',
                                       'Dixit Odyssey: "Bunny" promo card', 
@@ -117,7 +125,7 @@ describe('Items', function()
 
         it('get designers', function()
         {
-            var designers = thing.getDesigners();
+            var designers = thing.designers;
             var expectedDesigners = ['Jean-Louis Roubira'];
 
             assert.deepEqual(designers, expectedDesigners);
@@ -125,7 +133,7 @@ describe('Items', function()
 
         it('get artists', function()
         {
-            var artists = thing.getArtists();
+            var artists = thing.artists;
             var expectedArtists = ['Marie Cardouat'];
 
             assert.deepEqual(artists, expectedArtists);
@@ -133,7 +141,7 @@ describe('Items', function()
 
         it('get publishers', function()
         {
-            var publishers = thing.getPublishers();
+            var publishers = thing.publishers;
             var expectedPublishers = ['ADC Blackfire Entertainment', 'Asmodee', 'Asterion Press', 'Galápagos Jogos',
                                       'Gém Klub Kft.', 'hobbity.eu', 'Hobby Japan', 'KADABRA', 'Kaissa Chess & Games',
                                       'Korea Boardgames co., Ltd.', 'Lautapelit.fi', 'Libellud', 'Morapiaf', 'REBEL.pl',
@@ -144,7 +152,7 @@ describe('Items', function()
 
         it('get suggested number of players', function()
         {
-            var numberOfPlayers = thing.getSuggestedNumberOfPlayers();
+            var numberOfPlayers = thing.suggestedPlayers;
 
             var expectedNumberOfPlayers = {
                 totalVotes: 410,
@@ -164,7 +172,7 @@ describe('Items', function()
 
         it('get suggested player age', function()
         {
-            var playerAge = thing.getSuggestedPlayerAge();
+            var playerAge = thing.suggestedAge;
 
             var expectedPlayerAge = {
                 totalVotes: 137,
@@ -190,7 +198,7 @@ describe('Items', function()
 
         it('get language dependency', function()
         {
-            var languageDependency = thing.getLanguageDependency();
+            var languageDependency = thing.languageDependency;
 
             var expectedLanguageDependency = {
                 totalVotes: 157,
@@ -204,6 +212,13 @@ describe('Items', function()
             }
 
             assert.deepEqual(languageDependency, expectedLanguageDependency);
+        });
+
+        it('get url', function()
+        {
+            var url = thing.url;
+
+            assert.equal(url, 'https://boardgamegeek.com/boardgame/39856');
         });
 
     })

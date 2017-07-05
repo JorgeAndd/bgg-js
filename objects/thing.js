@@ -4,10 +4,11 @@ var xml2js = require('xml2js').Parser({explicitArray: false}),
     helper = require('../helper/helper.js');
 
 class Thing {
-    constructor(xml) 
+    constructor(id, xml) 
     {
         var self = this;
         this.xml = xml;
+        this.id = id;
 
         xml2js.parseString(xml, function(err, result) {
             self.fields = result.items.item;
@@ -20,13 +21,18 @@ class Thing {
         return xml;
     }
 
-    getName(type = 'primary') 
+    get url()
+    {
+        return 'https://boardgamegeek.com/boardgame/' + this.id;
+    }
+
+    get name()
     {
         var names = [];
 
         this.fields.name.map(function(obj) {
             var attributes = obj['$'];
-            if (attributes.type === type) {
+            if (attributes.type === 'primary') {
                 names.push(attributes.value);
             }
         });
@@ -34,30 +40,54 @@ class Thing {
         return (names.length > 1) ? names : names[0];
     }
 
-    getImage(type)
+    get alternateName()
     {
-        if(type === 'thumbnail')
-            var url = this.fields.thumbnail;
-        else
-            var url = this.fields.image;
+        var names = [];
 
-        return url;
+        this.fields.name.map(function(obj) {
+            var attributes = obj['$'];
+            if (attributes.type === 'alternate') {
+                names.push(attributes.value);
+            }
+        });
+
+        return (names.length > 1) ? names : names[0];
     }
 
-    getDescription()
+    get image()
+    {
+        return this.fields.image;
+    }
+
+    get thumbnail()
+    {
+        return this.fields.thumbnail;
+    }
+
+    get description()
     {
         return this.fields.description;
     }
 
-    getYear()
+    get year()
     {
         return this.fields.yearpublished['$'].value;
+    }
+
+    get minPlayers()
+    {
+        return this.players.min;
+    }
+
+    get maxPlayers()
+    {
+        return this.players.max;
     }
 
     /**
      *  Returns an object with the format {min: min, max: max}
      */
-    getPlayers()
+    get players()
     {
         var min = Number(this.fields.minplayers['$'].value);
         var max = Number(this.fields.maxplayers['$'].value);
@@ -68,7 +98,7 @@ class Thing {
     /**
      *  Returns an object with the format {min: min, max: max}
      */
-    getPlayTime()
+    get playingTime()
     {
         var min = Number(this.fields.minplaytime['$'].value);
         var max = Number(this.fields.minplaytime['$'].value);
@@ -76,37 +106,37 @@ class Thing {
         return {min: min, max: max};
     }
 
-    getMinAge()
+    get minAge()
     {
         return this.fields.minage['$'].value;
     }
 
-    getCategories()
+    get categories()
     {
         return this.getLinkValues('boardgamecategory');
     }
 
-    getMechanics()
+    get mechanics()
     {
         return this.getLinkValues('boardgamemechanic');
     }
 
-    getExpansions()
+    get expansions()
     {
         return this.getLinkValues('boardgameexpansion');
     }
 
-    getDesigners()
+    get designers()
     {
         return this.getLinkValues('boardgamedesigner');
     }
 
-    getArtists()
+    get artists()
     {
         return this.getLinkValues('boardgameartist');
     }
 
-    getPublishers()
+    get publishers()
     {
         return this.getLinkValues('boardgamepublisher');
     }
@@ -128,17 +158,17 @@ class Thing {
         return values;
     }
 
-    getSuggestedNumberOfPlayers()
+    get suggestedPlayers()
     {   
         return this.getPollData('suggested_numplayers', this.compositeResultParser);
     }
 
-    getSuggestedPlayerAge()
+    get suggestedAge()
     {
         return this.getPollData('suggested_playerage', this.simpleResultParser);
     }
 
-    getLanguageDependency()
+    get languageDependency()
     {
         return this.getPollData('language_dependence', this.simpleResultParser);
     }
@@ -200,7 +230,7 @@ class Thing {
         });    
 
         return resultData;
-    }
+    }  
 
 }
 
