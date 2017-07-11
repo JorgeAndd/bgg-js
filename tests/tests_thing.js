@@ -1,8 +1,6 @@
 var client = require('../client.js'),
     assert = require('chai').assert;
 
-// TODO: switch to chai for assertion
-
 describe('Items', function() 
 {
     describe('Dixit', function() 

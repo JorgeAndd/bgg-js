@@ -20,42 +20,42 @@ class User {
         return helper.getValue(this.fields, 'firstname');
     }
 
-    getLastName()
+    get lastName()
     {
         return helper.getValue(this.fields, 'lastname');
     }
 
-    getAvatar()
+    get avatar()
     {
         return helper.getValue(this.fields, 'avatarlink');
     }
 
-    getYearRegistred()
+    get yearRegistred()
     {
         return helper.getValue(this.fields, 'yearregistered');
     }
 
-    getState()
+    get state()
     {
         return helper.getValue(this.fields, 'stateorprovince');
     }
 
-    getCountry()
+    get country()
     {
         return helper.getValue(this.fields, 'country');
     }
 
-    getTradeRating()
+    get tradeRating()
     {
         return helper.getValue(this.fields, 'traderating');
     }
 
-    getMarketRating()
+    get marketRating()
     {
         return helper.getValue(this.fields, 'marketrating');
     }
 
-    getUrl()
+    get url()
     {
         return 'https://boardgamegeek.com/user/' + this.name;
     }

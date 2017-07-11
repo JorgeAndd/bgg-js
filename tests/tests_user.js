@@ -1,5 +1,5 @@
 var client = require('../client.js'),
-    assert = require('assert');
+    assert = require('chai').assert;
 
 // TODO: switch to chai for assertion
 
@@ -27,63 +27,64 @@ describe('Items', function()
 
         it('get last name', function()
         {
-            var lastName = user.getLastName();
+            var lastName = user.lastName;
 
             assert.equal(lastName, 'Andrade');
         });
 
         it('get avatar', function()
         {
-            var avatar = user.getAvatar();
+            var avatar = user.avatar;
 
             assert.equal(avatar, 'N/A');
         });
 
         it('get year registred', function()
         {
-            var year = user.getYearRegistred();
+            var year = user.yearRegistred;
 
             assert.equal(year, '2015');
         });
 
-        xit('get last login', function()
+        it('get last login', function()
         {
-            var lastLogin = user.getLastLogin();
+            var lastLogin = user.lastLogin;
 
-            assert.equal(lastLogin, '2017-06-22');
+            // TODO: test if lastLogin is a valid date
+            // TODO: test if lastLogin is same or before as today
         });
 
         it('get state or province', function()
         {
-            var state = user.getState();
+            var state = user.state;
 
             assert.equal(state, 'Distrito Federal');
         });
 
         it('get country', function()
         {
-            var country = user.getCountry();
+            var country = user.country;
 
             assert.equal(country, 'Brazil');
         });
 
         it('get trade rating', function()
         {
-            var rating = user.getTradeRating();
+            var rating = user.tradeRating;
 
             assert.equal(rating, '0');
         });
 
         it('get market rating', function()
         {
-            var rating = user.getMarketRating();
+            var rating = user.marketRating;
 
             assert.equal(rating, '0');
         });
         
         it('get url', function()
         {
-            var url = user.getUrl();
+            var url = user.url;
 
             assert.equal(url, 'https://boardgamegeek.com/user/Jorgel');
         });
