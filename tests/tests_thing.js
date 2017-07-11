@@ -1,5 +1,5 @@
 var client = require('../client.js'),
-    assert = require('assert');
+    assert = require('chai').assert;
 
 // TODO: switch to chai for assertion
 
@@ -104,23 +104,11 @@ describe('Items', function()
         it('get expansions', function() 
         {
             var expansions = thing.expansions;
-            var expectedExpansions = ['Dixit 2: "Gift" promo card', 'Dixit 2: "The American" promo card', 
-                                      'Dixit 3: Journey', 'Dixit Odyssey (expansion)',
-                                      'Dixit Odyssey: "Bunny" promo card', 
-                                      'Dixit Origins: "La Machine à rêves" Promotional card', 'Dixit Quest',
-                                      'Dixit: "Magic bunny" promo card', 
-                                      'Dixit: "Pumpkinhead" and "Santa" promo cards', 
-                                      'Dixit: "The Dragon" promo card',
-                                      'Dixit: "The Inheritors" promo cards', 
-                                      'Dixit: "The Werewolves of Miller\'s Hollow: The Pact" Promo Cards',
-                                      'Dixit: "Werewolves" promo cards', 
-                                      'Dixit: 2012 Asmodee Special Cards', 
-                                      'Dixit: Anniversary Pack',
-                                      'Dixit: Daydreams', 'Dixit: Memories', 'Dixit: Origins', 
-                                      'Dixit: Revelations', 'Dixit: Spielbox 03/15 Promo Card',
-                                      'Dixit: Tabletop Day 2015 Promo Pack' ];
             
-            assert.deepEqual(expansions, expectedExpansions);
+            // Tests if some expansions
+            assert.include(expansions, 'Dixit Odyssey (expansion)', 'doesnt have Odyssey');
+            assert.include(expansions, 'Dixit Quest', 'doesnt have Quest');
+            assert.include(expansions, 'Dixit: Anniversary Pack', 'doesnt have Anniversary');
         });
 
         it('get designers', function()
@@ -142,57 +130,40 @@ describe('Items', function()
         it('get publishers', function()
         {
             var publishers = thing.publishers;
-            var expectedPublishers = ['ADC Blackfire Entertainment', 'Asmodee', 'Asterion Press', 'Galápagos Jogos',
-                                      'Gém Klub Kft.', 'hobbity.eu', 'Hobby Japan', 'KADABRA', 'Kaissa Chess & Games',
-                                      'Korea Boardgames co., Ltd.', 'Lautapelit.fi', 'Libellud', 'Morapiaf', 'REBEL.pl',
-                                      'Swan Panasia Co., Ltd.'];
 
-            assert.deepEqual(publishers, expectedPublishers);
+            // Tests if some publishers
+            assert.include(publishers, 'Asmodee', 'doesnt have asmodee');
+            assert.include(publishers, 'Galápagos Jogos', 'doesnt galapagos');
         });
 
         it('get suggested number of players', function()
         {
             var numberOfPlayers = thing.suggestedPlayers;
 
-            var expectedNumberOfPlayers = {
-                totalVotes: 410,
-                results: {
-                    '1': { 'Best': 0, 'Recommended': 0, 'Not Recommended': 266},
-                    '2': { 'Best': 1, 'Recommended': 4, 'Not Recommended': 274},
-                    '3': { 'Best': 2, 'Recommended': 78, 'Not Recommended': 240},
-                    '4': { 'Best': 58, 'Recommended': 271, 'Not Recommended': 32},
-                    '5': { 'Best': 256, 'Recommended': 123, 'Not Recommended': 0},
-                    '6': { 'Best': 307, 'Recommended': 69, 'Not Recommended': 2},
-                    '6+': { 'Best': 42, 'Recommended': 82, 'Not Recommended': 90}
-                }
-            }
+            // Tests format of number of players
+            assert.hasAllKeys(numberOfPlayers, ['totalVotes', 'results'], 'doesnt have required properties');
+            assert.hasAllKeys(numberOfPlayers.results, ['1', '2', '3', '4', '5', '6', '6+'], 'doesnt have required number of players entries');
 
-            assert.deepEqual(numberOfPlayers, expectedNumberOfPlayers);
+            // Tests a valid value for number of players
+            Object.keys(numberOfPlayers.results).map(function(key) {
+                assert.isAtLeast(Number(numberOfPlayers.results[key]['Best']), 0, 'invalid poll result');
+                assert.isAtLeast(Number(numberOfPlayers.results[key]['Recommended']), 0, 'invalid poll result');
+                assert.isAtLeast(Number(numberOfPlayers.results[key]['Not Recommended']), 0, 'invalid poll result');
+            })
         });
 
         it('get suggested player age', function()
         {
             var playerAge = thing.suggestedAge;
 
-            var expectedPlayerAge = {
-                totalVotes: 137,
-                results: {
-                    '2': 0,
-                    '3': 1,
-                    '4': 3, 
-                    '5': 9,
-                    '6': 39,
-                    '8': 58,
-                    '10': 16,
-                    '12': 7,
-                    '14': 2,
-                    '16': 2,
-                    '18': 0,
-                    '21 and up': 0
-                }
-            }
+            // Tests format of player age
+            assert.hasAllKeys(playerAge, ['totalVotes', 'results'], 'doesnt have required properties')
 
-            assert.deepEqual(playerAge, expectedPlayerAge);
+            // Tests a valid value for player age
+            Object.keys(playerAge.results).map(function(key) {
+                assert.isAtLeast(Number(playerAge.results[key]), 0, 'invalid poll result');
+            });
+
 
         });
 
@@ -200,18 +171,13 @@ describe('Items', function()
         {
             var languageDependency = thing.languageDependency;
 
-            var expectedLanguageDependency = {
-                totalVotes: 157,
-                results: {
-                    'No necessary in-game text': 155,
-                    'Some necessary text - easily memorized or small crib sheet': 0,
-                    'Moderate in-game text - needs crib sheet or paste ups': 0,
-                    'Extensive use of text - massive conversion needed to be playable': 0,
-                    'Unplayable in another language': 2
-                }
-            }
+            // Tests format of language dependency
+            assert.hasAllKeys(languageDependency, ['totalVotes', 'results'], 'doesnt have required properties');
 
-            assert.deepEqual(languageDependency, expectedLanguageDependency);
+            // Tests a valid value for player age
+            Object.keys(languageDependency.results).map(function(key) {
+                assert.isAtLeast(Number(languageDependency.results[key]), 0, 'invalid poll result');
+            });
         });
 
         it('get url', function()
