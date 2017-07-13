@@ -143,7 +143,7 @@ describe('Items', function()
             assert.hasAllKeys(numberOfPlayers.results, ['1', '2', '3', '4', '5', '6', '6+'], 'doesnt have required number of players entries');
 
             // Tests a valid value for number of players
-            Object.keys(numberOfPlayers.results).map(function(key) {
+            Object.keys(numberOfPlayers.results).forEach(function(key) {
                 assert.isAtLeast(Number(numberOfPlayers.results[key]['Best']), 0, 'invalid poll result');
                 assert.isAtLeast(Number(numberOfPlayers.results[key]['Recommended']), 0, 'invalid poll result');
                 assert.isAtLeast(Number(numberOfPlayers.results[key]['Not Recommended']), 0, 'invalid poll result');
@@ -158,7 +158,7 @@ describe('Items', function()
             assert.hasAllKeys(playerAge, ['totalVotes', 'results'], 'doesnt have required properties')
 
             // Tests a valid value for player age
-            Object.keys(playerAge.results).map(function(key) {
+            Object.keys(playerAge.results).forEach(function(key) {
                 assert.isAtLeast(Number(playerAge.results[key]), 0, 'invalid poll result');
             });
 
@@ -173,7 +173,7 @@ describe('Items', function()
             assert.hasAllKeys(languageDependency, ['totalVotes', 'results'], 'doesnt have required properties');
 
             // Tests a valid value for player age
-            Object.keys(languageDependency.results).map(function(key) {
+            Object.keys(languageDependency.results).forEach(function(key) {
                 assert.isAtLeast(Number(languageDependency.results[key]), 0, 'invalid poll result');
             });
         });
@@ -185,6 +185,40 @@ describe('Items', function()
             assert.equal(url, 'https://boardgamegeek.com/boardgame/39856');
         });
 
+        it('get rank', function()
+        {
+            var rankings = thing.ranks();
+
+            var expectedRank = [
+                {
+                    id: 1,
+                    type: 'subtype',
+                    name: 'boardgame',
+                    friendlyname: 'Board Game Rank',
+                    value: 163,
+                    bayesaverage: 7.25966
+                },
+
+                {
+                    id: 5498,
+                    type: 'family',
+                    name: 'partygames',
+                    friendlyname: 'Party Game Rank',
+                    value: 14,
+                    bayesaverage: 7.23544
+                }
+            ]
+
+            rankings.forEach(function(rank) {
+                assert.hasAllKeys(rank, ['id', 'type', 'name', 'friendlyname', 'value', 'bayesaverage'], 
+                                    'rank does not have all required keys');
+
+                assert.isAtLeast(rank.id, 0, 'invalid rank id');
+                assert.isAtLeast(rank.value, 0, 'invalid rank value');
+                assert.isAtLeast(rank.bayesaverage, 0, 'invalid rank bayes average');
+                assert.isAtMost(rank.bayesaverage, 10, 'invalid rank bayes average');
+            });
+        })
     })
 });
 

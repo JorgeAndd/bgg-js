@@ -30,7 +30,7 @@ class Thing {
     {
         var names = [];
 
-        this.fields.name.map(function(obj) {
+        this.fields.name.forEach(function(obj) {
             var attributes = obj['$'];
             if (attributes.type === 'primary') {
                 names.push(attributes.value);
@@ -44,7 +44,7 @@ class Thing {
     {
         var names = [];
 
-        this.fields.name.map(function(obj) {
+        this.fields.name.forEach(function(obj) {
             var attributes = obj['$'];
             if (attributes.type === 'alternate') {
                 names.push(attributes.value);
@@ -147,7 +147,7 @@ class Thing {
     {
         var values = [];
 
-        this.fields.link.map(function(obj) 
+        this.fields.link.forEach(function(obj) 
         {
             var attributes = obj['$'];
             if (attributes.type === type) {
@@ -220,7 +220,7 @@ class Thing {
             var numberOfPlayers = result['$'].numplayers;
             var votes = {};
 
-            result['result'].map(function(voting)
+            result['result'].forEach(function(voting)
             {
                 voting = voting['$'];
                 votes[voting.value] = voting.numvotes;
