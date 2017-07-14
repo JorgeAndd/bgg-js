@@ -187,7 +187,7 @@ describe('Items', function()
 
         it('get rank', function()
         {
-            var rankings = thing.ranks();
+            var rankings = thing.ranks;
 
             var expectedRank = [
                 {

@@ -7,7 +7,7 @@ module.exports = {
     baseUrl: 'https://www.boardgamegeek.com/xmlapi2/',
 
     thing: function(id, callback) {
-        let params = 'id=' + id;
+        let params = 'id=' + id  + '&stats=1';
         let requestUrl = this.baseUrl + 'thing?' + params;
         
         request(requestUrl)

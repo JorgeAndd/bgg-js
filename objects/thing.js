@@ -173,6 +173,21 @@ class Thing {
         return this.getPollData('language_dependence', this.simpleResultParser);
     }
 
+    get ranks()
+    {
+        var ranks = this.fields.statistics.ratings.ranks;
+
+        ranks.rank.forEach(function(rank) {
+            rank['$'].id = Number(rank['$'].id);
+            rank['$'].value = Number(rank['$'].value);
+            rank['$'].bayesaverage = Number(rank['$'].bayesaverage);
+            
+            ranks.push(rank['$']);
+        });
+
+        return ranks;
+    }
+
     getPollData(type, resultParser)
     {
         var pollData = {};
@@ -231,6 +246,8 @@ class Thing {
 
         return resultData;
     }  
+
+    
 
 }
 
